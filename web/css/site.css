@@ -1,0 +1,203 @@
+html,
+body {
+    height: 100%;
+}
+
+.wrap {
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -60px;
+    padding: 0 0 60px;
+}
+
+.wrap > .container {
+    padding: 70px 15px 20px;
+}
+
+.footer {
+    height: 60px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+}
+
+.jumbotron {
+    text-align: center;
+    background-color: transparent;
+}
+
+.jumbotron .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+}
+
+.not-set {
+    color: #c55;
+    font-style: italic;
+}
+
+/* add sorting icons to gridview sort links */
+a.asc:after, a.desc:after {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    padding-left: 5px;
+}
+
+a.asc:after {
+    content: /*"\e113"*/ "\e151";
+}
+
+a.desc:after {
+    content: /*"\e114"*/ "\e152";
+}
+
+.sort-numerical a.asc:after {
+    content: "\e153";
+}
+
+.sort-numerical a.desc:after {
+    content: "\e154";
+}
+
+.sort-ordinal a.asc:after {
+    content: "\e155";
+}
+
+.sort-ordinal a.desc:after {
+    content: "\e156";
+}
+
+.grid-view th {
+    white-space: nowrap;
+}
+
+.hint-block {
+    display: block;
+    margin-top: 5px;
+    color: #999;
+}
+
+.error-summary {
+    color: #a94442;
+    background: #fdf7f7;
+    border-left: 3px solid #eed3d7;
+    padding: 10px 20px;
+    margin: 0 0 15px 0;
+}
+
+/* align the logout "link" (button in form) of the navbar */
+.nav li > form > button.logout {
+    padding: 15px;
+    border: none;
+}
+.content-body{
+    width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+@media(max-width:767px) {
+    .nav li > form > button.logout {
+        display:block;
+        text-align: left;
+        width: 100%;
+        padding: 10px 15px;
+    }
+}
+
+.nav > li > form > button.logout:focus,
+.nav > li > form > button.logout:hover {
+    text-decoration: none;
+}
+
+.nav > li > form > button.logout:focus {
+    outline: none;
+}
+
+.categories{
+    width: 250px;
+    border: 1px solid gray;
+    padding: 15px;
+}
+.categories li{
+    list-style-type: none;
+    margin: 5px 0;
+}
+.categories ul{
+    padding-left:10px;
+}
+.tags ul{
+    padding-left:10px;
+}
+.tags li {
+    display: inline-block;
+    list-style-type: none;
+    border: 1px solid blue;
+    padding: 7px;
+    color: blue;
+    margin-left: 10px;
+}
+
+.rating {
+      unicode-bidi: bidi-override;
+      direction: rtl;
+      text-align: left;
+    }
+    .rating > span {
+      display: inline-block;
+      position: relative;
+      width: 1.2em;
+    }
+    .rating > span:hover,
+    .rating > span:hover ~ span {
+      color: transparent;
+      cursor: pointer;
+    }
+    .rating > span:hover:before,
+    .rating > span:hover ~ span:before, .star-active:before {
+       content: "\2605";
+       position: absolute;
+       left: 0;
+       color: gold;
+    }
+    /*.star-active {
+        content: "\2605";
+        position: absolute;
+        color:  transparent gold;
+        left: 0;
+    }*/
+
+    #wrapper {
+        opacity: 0.8;
+        position: fixed;
+        left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+        padding: 16px;
+        z-index: 10;
+        overflow: auto;
+        background-color: rgba(1, 1, 1, 0.725);
+
+    }
+    #window {
+        width: 500px;
+        height: 200px;
+        margin: 100px auto;
+        z-index: 20;
+        padding: 20px;
+        left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+        position: fixed;
+        background: #fff;
+        text-align: center;
+    }
+#slug {
+    display:none;
+}
