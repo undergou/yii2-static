@@ -95,24 +95,42 @@ class PageController extends Controller
                 $userRating = null;
             }
 
-            $query = (new \yii\db\Query())
-                ->select('rate')
-                ->from('rating')
-                ->where(['post' => $slug])
-                ->all();
+        $querySum = (new \yii\db\Query())
+            ->select('sum')
+            ->from('article')
+            ->where(['slug' => $slug])
+            ->one();
+        $queryCount = (new \yii\db\Query())
+            ->select('count')
+            ->from('article')
+            ->where(['slug' => $slug])
+            ->one();
+        $valCount = (int) ArrayHelper::getValue($queryCount, 'count');
+        $valSum = (int) ArrayHelper::getValue($querySum, 'sum');
+//var_dump($val);die;
+        if($valCount){
+            $userRatingAverage = (int) round($valSum/$valCount);
+        } else {
+            $userRatingAverage = null;
+        }
+//            $query = (new \yii\db\Query())
+//                ->select('rate')
+//                ->from('rating')
+//                ->where(['post' => $slug])
+//                ->all();
 
-                $arrayRates = array();
-                for ($i=0; $i < count($query); $i++) {
-                    $val = ArrayHelper::getValue($query, $i);
-                    $value = ArrayHelper::getValue($val, 'rate');
-                    array_push($arrayRates, $value);
-                }
-                $countRates = count($arrayRates);
-                if($countRates){
-                    $userRatingAverage = (int) round(array_sum($arrayRates)/$countRates);
-                } else {
-                    $userRatingAverage = null;
-                }
+//                $arrayRates = array();
+//                for ($i=0; $i < count($query); $i++) {
+//                    $val = ArrayHelper::getValue($query, $i);
+//                    $value = ArrayHelper::getValue($val, 'rate');
+//                    array_push($arrayRates, $value);
+//                }
+//                $countRates = count($arrayRates);
+//                if($countRates){
+//                    $userRatingAverage = (int) round(array_sum($arrayRates)/$countRates);
+//                } else {
+//                    $userRatingAverage = null;
+//                }
 
                     return $this->render('single',[
                         'article' => $article,

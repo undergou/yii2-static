@@ -50,6 +50,7 @@ class Article extends \yii\db\ActiveRecord
             // [['rating'], 'integer'],
             [['content', 'short_content', 'status'], 'string'],
             [['author', 'title', 'slug'], 'string', 'max' => 255],
+            [['sum', 'count'], 'integer'],
         ];
     }
 
