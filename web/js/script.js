@@ -3,8 +3,8 @@ $(document).ready(function(){
 		var rate = event.target.getAttribute('value');
 		var slug = $('#slug').html();
 		$.ajax({
-			url:'/ajax/request.html',
-			type: 'GET',
+			url:'rating/create.html',
+			type: 'POST',
 			data: {rate: rate,
 					slug: slug},
 			success: function(response){
