@@ -4,15 +4,16 @@ $(document).ready(function(){
 		var slug = $('#slug').html();
 		var obj = {rate: rate,
             		slug: slug};
-		// var data = JSON.stringify(obj);
-		// console.log(data);
+		var data = JSON.stringify(obj);
+		console.log(data);
 		$.ajax({
 			url:'/rating/create.html',
 			type: 'POST',
-			data: obj,
+			data: data,
 			dataType: 'json',
 			success: function(response){
                 console.log(response);
+
 				$('#result-ajax').html(response);
 			}
 		});

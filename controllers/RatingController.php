@@ -24,11 +24,13 @@ class RatingController extends ActiveController
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         $request = Yii::$app->request;
+
         $slug = $request->post('slug');
         $rate = $request->post('rate');
+        var_dump(Yii::$app->getRequest()->getBodyParams());
         $ip = Yii::$app->request->userIP;
         $article = Article::find()->where(['slug' => $slug])->one();
-
+//        Yii::$app->response->format = Response::FORMAT_JSON;
         $rating = new Rating();
         if(!Rating::validateIp($slug, $ip)){
             $rating->post = $slug;
@@ -58,9 +60,9 @@ class RatingController extends ActiveController
             return '<div class="alert alert-danger">You have already voted</div>';
         }
     }
-    public function checkAccess($action, $model = null, $params = [])
-    {
-        return Rating::find()->where(['post'=> $slug, 'ip' => $ip])->all();
-
-    }
+//    public function checkAccess($action, $model = null, $params = [])
+//    {
+//        return Rating::find()->where(['post'=> $slug, 'ip' => $ip])->all();
+//
+//    }
 }
