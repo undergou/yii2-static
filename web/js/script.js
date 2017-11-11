@@ -10,11 +10,11 @@ $(document).ready(function(){
 			url:'/rating/create.html',
 			type: 'POST',
 			data: data,
+            contentType: 'application/json; charset=utf-8',
 			dataType: 'json',
 			success: function(response){
-                console.log(response);
-
-				$('#result-ajax').html(response);
+                var objResponse = JSON.parse(response);
+				$('#result-ajax').html('<div class="alert '+objResponse.classStyle+'">'+objResponse.message+'</div>');
 			}
 		});
 	});

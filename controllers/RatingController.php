@@ -13,6 +13,15 @@ class RatingController extends ActiveController
 {
     public $modelClass = 'app\models\Rating';
 
+    public function checkAccess($action, $model = null, $params = [])
+    {
+//        $ip = Yii::$app->request->userIP;
+//        if (Rating::find()->where(['ip' => $ip])->all()){
+//            throw new \yii\web\ForbiddenHttpException(sprintf('You can only %s articles that you\'ve created.', $action));
+//        }
+
+    }
+
     public function actions()
     {
         $actions = parent::actions();
@@ -24,45 +33,29 @@ class RatingController extends ActiveController
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         $request = Yii::$app->request;
-
         $slug = $request->post('slug');
         $rate = $request->post('rate');
-        var_dump(Yii::$app->getRequest()->getBodyParams());
         $ip = Yii::$app->request->userIP;
         $article = Article::find()->where(['slug' => $slug])->one();
-//        Yii::$app->response->format = Response::FORMAT_JSON;
         $rating = new Rating();
+
         if(!Rating::validateIp($slug, $ip)){
             $rating->post = $slug;
             $rating->ip = $ip;
             $rating->rate = $rate;
             $rating->save();
-
-//            $query = (new \yii\db\Query())
-//                ->select('rate')
-//                ->from('rating')
-//                ->where(['post' => $slug])
-//                ->all();
-//            $arrayRates = array();
-//            for ($i=0; $i < count($query); $i++) {
-//                $val = ArrayHelper::getValue($query, $i);
-//                $value = ArrayHelper::getValue($val, 'rate');
-//                array_push($arrayRates, $value);
-//            }
-//            $countRates = count($arrayRates);
-            $article->sum += $rate;
-            $article->count++;
-            $article->save();
-
-            return '<div class="alert alert-success">You have successfully voted! Your vote is '.$rate.'</div>';
+            Yii::$app->db->createCommand('UPDATE article SET sum = sum + '.$rate.', count = count + 1 WHERE slug = "'.$slug.'"')->execute();
+            $obj = (object) 'ResultSuccess';
+            $obj->message = 'You have successfully voted';
+            $obj->classStyle = 'alert-success';
+            return json_encode($obj);
         }
         elseif (Rating::validateIp($slug, $ip)) {
-            return '<div class="alert alert-danger">You have already voted</div>';
+            $obj = (object) 'ResultError';
+            $obj->message = 'You have already voted';
+            $obj->classStyle = 'alert-danger';
+            return json_encode($obj);
         }
     }
-//    public function checkAccess($action, $model = null, $params = [])
-//    {
-//        return Rating::find()->where(['post'=> $slug, 'ip' => $ip])->all();
-//
-//    }
+
 }
