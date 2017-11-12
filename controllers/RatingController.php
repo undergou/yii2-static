@@ -7,6 +7,7 @@ use app\models\Rating;
 use app\models\Article;
 use yii\helpers\ArrayHelper;
 use yii\web\Response;
+use yii\web\ForbiddenHttpException;
 use Yii;
 
 class RatingController extends ActiveController
@@ -15,11 +16,12 @@ class RatingController extends ActiveController
 
     public function checkAccess($action, $model = null, $params = [])
     {
-//        $ip = Yii::$app->request->userIP;
-//        if (Rating::find()->where(['ip' => $ip])->all()){
-//            throw new \yii\web\ForbiddenHttpException(sprintf('You can only %s articles that you\'ve created.', $action));
-//        }
-
+        $ip = Yii::$app->request->userIP;
+        if ($action === 'create'){
+            if (Rating::find()->where(['ip' => $ip])->all()){
+                throw new \yii\web\ForbiddenHttpException('Forbidden Access');
+            }
+        }
     }
 
     public function actions()
@@ -45,16 +47,12 @@ class RatingController extends ActiveController
             $rating->rate = $rate;
             $rating->save();
             Yii::$app->db->createCommand('UPDATE article SET sum = sum + '.$rate.', count = count + 1 WHERE slug = "'.$slug.'"')->execute();
-            $obj = (object) 'ResultSuccess';
-            $obj->message = 'You have successfully voted';
-            $obj->classStyle = 'alert-success';
-            return json_encode($obj);
+            $arr = ['message' => 'You have successfully voted', 'classStyle' =>'alert-success'];
+            return json_encode($arr);
         }
         elseif (Rating::validateIp($slug, $ip)) {
-            $obj = (object) 'ResultError';
-            $obj->message = 'You have already voted';
-            $obj->classStyle = 'alert-danger';
-            return json_encode($obj);
+            $arr = ['message' => 'You have already voted', 'classStyle' =>'alert-danger'];
+            return json_encode($arr);
         }
     }
 
