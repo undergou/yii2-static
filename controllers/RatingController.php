@@ -50,10 +50,10 @@ class RatingController extends ActiveController
             $arr = ['message' => 'You have successfully voted', 'classStyle' =>'alert-success'];
             return json_encode($arr);
         }
-        elseif (Rating::validateIp($slug, $ip)) {
-            $arr = ['message' => 'You have already voted', 'classStyle' =>'alert-danger'];
-            return json_encode($arr);
-        }
+//        elseif (Rating::validateIp($slug, $ip)) {
+//            $arr = ['message' => 'You have already voted', 'classStyle' =>'alert-danger'];
+//            return json_encode($arr);
+//        }
     }
 
 }
