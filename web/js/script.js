@@ -13,8 +13,14 @@ $(document).ready(function(){
             contentType: 'application/json; charset=utf-8',
 			dataType: 'json',
 			success: function(response){
+				console.log(response);
                 var objResponse = JSON.parse(response);
-				$('#result-ajax').html('<div class="alert '+objResponse.classStyle+'">'+objResponse.message+'</div>');
+                if(objResponse.status == 'success'){
+                    $('#result-ajax').html('<div class="alert alert-success">You have successfully voted</div>');
+				} else {
+                    $('#result-ajax').html('<div class="alert alert-danger">You have already voted</div>');
+				}
+
 			}
 		});
 	});

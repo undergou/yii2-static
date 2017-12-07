@@ -25,7 +25,7 @@ class RatingController extends ActiveController
     public function checkAccess($action, $model = null, $params = [])
     {
             if(Rating::find()->where(['post' => $params['slug'], 'ip'=>$params['ip']])->count() != 0){
-                $arr = ['message' => 'You have already voted', 'classStyle' =>'alert-danger'];
+                $arr = ['status'=> 'error','message' => 'You have already voted', 'classStyle' =>'alert-danger'];
                 return json_encode($arr);
 //                throw new \yii\web\ForbiddenHttpException('Forbidden');
             }
@@ -51,7 +51,7 @@ class RatingController extends ActiveController
            $rating->rate = $rate;
            $rating->save();
            Yii::$app->db->createCommand('UPDATE article SET sum = sum + '.$rate.', count = count + 1 WHERE slug = "'.$slug.'"')->execute();
-           $arr = ['message' => 'You have successfully voted', 'classStyle' =>'alert-success'];
+           $arr = ['status'=> 'success','message' => 'You have successfully voted', 'classStyle' =>'alert-success'];
            return json_encode($arr);
        }
 
